@@ -9,21 +9,28 @@
 		padding: 1rem 2rem;
 		border: none;
 		border-radius: 5px;
+		text-transform: capitalize;
 	}
 	
 	.status_on input[type=submit] {
 		background-color: lightgreen;
 	}
-	.status_unconfigured input[type=submit] {
-		background-color: red;
+	.status_misconfigured input[type=submit] {
+		background-color: rgb(255, 150, 150);
 	}
 	</style>
 </head>
 <body>
 	{% for switch in switches %}
-	<form action='/switch' method='post' class="status_{{ switch.state }}">
-		<input type="hidden" name="id" value="{{ switch.id }}">
-		<input type="submit" {% if switch.state not in ('on', 'off') %}disabled{% endif %} value="{{ switch.name }}">
+	<form action='/toggle/' method='post' class="status_{{ switch.state }}">
+		<input type="hidden" name="switch_id" value="{{ switch.id }}">
+		<label>{{ switch.name }}: 
+			<input 
+				type="submit" 
+				{% if switch.state not in ('on', 'off') %}disabled{% endif %} 
+				value="{{ switch.state }}"
+				>
+		</label>
 	</form>
 	{% endfor %}
 </body>
