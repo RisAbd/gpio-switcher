@@ -1,0 +1,30 @@
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Relay switcher</title>
+	<style>
+	input[type=submit] {
+		font-size: 30px;
+		padding: 1rem 2rem;
+		border: none;
+		border-radius: 5px;
+	}
+	
+	.status_on input[type=submit] {
+		background-color: lightgreen;
+	}
+	.status_unconfigured input[type=submit] {
+		background-color: red;
+	}
+	</style>
+</head>
+<body>
+	{% for switch in switches %}
+	<form action='/switch' method='post' class="status_{{ switch.state }}">
+		<input type="hidden" name="id" value="{{ switch.id }}">
+		<input type="submit" {% if switch.state not in ('on', 'off') %}disabled{% endif %} value="{{ switch.name }}">
+	</form>
+	{% endfor %}
+</body>
+</html>
